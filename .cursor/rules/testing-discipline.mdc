@@ -9,20 +9,20 @@ alwaysApply: true
 
 1. **Every change ships with tests.** No production code is considered complete without corresponding test coverage.
 2. **Never delete a passing test.** If a test fails after a code change, fix the code or update the test to match the new correct behavior — do not remove it.
-3. **Target ~80% coverage** across methods and conditional branches (if/else, switch, error paths).
+3. **Target ~80% coverage** across methods and conditional branches (if/else, match, error paths).
 
-## Go Testing Standards
+## Python Testing Standards
 
-- Use the standard `testing` package. Prefer table-driven tests for functions with multiple input scenarios.
-- Place test files alongside source files (`foo.go` -> `foo_test.go`).
-- Name tests clearly: `TestFunctionName_Scenario` (e.g. `TestParseLineage_EmptyInput`).
-- Test both the happy path **and** error/edge cases for every exported function.
+- Use `pytest` as the test runner.
+- Place tests in the `tests/` directory, mirroring the source layout (e.g. `pyspark_pipeline_composer/sources/delta.py` → `tests/test_sources/test_delta_source.py`).
+- Name tests clearly: `test_<function>_<scenario>` (e.g. `test_read_stream_with_options`).
+- Test both the happy path **and** error/edge cases for every public function or method.
+- Use a **session-scoped** Spark fixture in `conftest.py` — Spark startup is expensive; reuse across all tests.
 
 ## Coverage Workflow
 
-- After writing or modifying code, run `go test ./... -coverprofile=coverage.out` and review coverage.
-- Use `go tool cover -func=coverage.out` to check per-function coverage.
-- Flag any exported function below 80% branch coverage and add tests before considering work complete.
+- After writing or modifying code, run `make test` and review output.
+- Flag any public method below 80% branch coverage and add tests before considering work complete.
 
 ## What Not To Do
 
