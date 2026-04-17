@@ -1,2 +1,2 @@
 # pyspark-pipeline-composer
-This project is a minimal framework for generating structured streaming apps
+This project will be an effective harness for generating streaming applications.
